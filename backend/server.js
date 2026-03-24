@@ -12,27 +12,21 @@ connectDB();
 // ================= CORS CONFIG (FINAL FIX) =================
 const allowedOrigins = [
     "http://localhost:5173",
-    "https://taskflow-gamma-ochre.vercel.app"
+    "https://taskflow-uu1u.vercel.app"   // ✅ UPDATE THIS
 ];
 
 app.use(cors({
     origin: function (origin, callback) {
-        // allow requests with no origin (like mobile apps / Postman)
         if (!origin) return callback(null, true);
 
         if (allowedOrigins.includes(origin)) {
-            callback(null, true);
+            return callback(null, true);
         } else {
-            callback(new Error("Not allowed by CORS"));
+            return callback(new Error("CORS not allowed"));
         }
     },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    credentials: true
 }));
-
-// Handle preflight requests
-app.options("*", cors());
 
 // ================= MIDDLEWARE =================
 app.use(express.json());
@@ -41,8 +35,10 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
 
-// Health check route
-app.get('/', (req, res) => res.send('API Running 🚀'));
+// Health check
+app.get('/', (req, res) => {
+    res.send('API Running 🚀');
+});
 
 // ================= ERROR HANDLER =================
 app.use(errorHandler);
