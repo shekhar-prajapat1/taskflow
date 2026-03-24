@@ -9,9 +9,23 @@ const app = express();
 // Connect Database
 connectDB();
 
-// ================= CORS CONFIG (FIXED) =================
+// ================= CORS CONFIG (FINAL FIX) =================
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://taskflow-gamma-ochre.vercel.app"
+];
+
 app.use(cors({
-    origin: "http://localhost:5173",   // frontend URL
+    origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps / Postman)
+        if (!origin) return callback(null, true);
+
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"]
@@ -27,7 +41,8 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/tasks', require('./routes/taskRoutes'));
 
-app.get('/', (req, res) => res.send('API Running'));
+// Health check route
+app.get('/', (req, res) => res.send('API Running 🚀'));
 
 // ================= ERROR HANDLER =================
 app.use(errorHandler);
