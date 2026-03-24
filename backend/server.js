@@ -9,22 +9,9 @@ const app = express();
 // Connect Database
 connectDB();
 
-// ================= CORS CONFIG (FINAL FIX) =================
-const allowedOrigins = [
-    "http://localhost:5173",
-    "https://taskflow-uu1u.vercel.app"   // ✅ UPDATE THIS
-];
-
+// ================= CORS FIX (FINAL) =================
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
-
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, true);
-        } else {
-            return callback(new Error("CORS not allowed"));
-        }
-    },
+    origin: true, // allow all origins dynamically
     credentials: true
 }));
 
