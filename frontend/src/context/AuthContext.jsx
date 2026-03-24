@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      api.get('/auth/me')
+      api.get('/api/auth/me') // ✅ FIXED
         .then((res) => {
           setUser(res.data);
         })
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
   }, [token]);
 
   const login = async (email, password) => {
-    const res = await api.post('/auth/login', { email, password });
+    const res = await api.post('/api/auth/login', { email, password }); // ✅ FIXED
     if (res.data.token) {
       localStorage.setItem('token', res.data.token);
       setToken(res.data.token);
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const signup = async (username, email, password) => {
-    const res = await api.post('/auth/signup', { username, email, password });
+    const res = await api.post('/api/auth/register', { username, email, password }); // ✅ FIXED
     if (res.data.token) {
       localStorage.setItem('token', res.data.token);
       setToken(res.data.token);
