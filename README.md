@@ -1,4 +1,11 @@
 # TaskFlow - Task Management App
+## 🌐 Live Project
+
+[![Live Demo](https://img.shields.io/badge/Live-Demo-blue?style=for-the-badge)](https://taskflow-uu1u.vercel.app)
+
+[![Backend API](https://img.shields.io/badge/API-Server-green?style=for-the-badge)](https://taskflow-backend-jmmz.onrender.com)
+
+Link: https://taskflow-uu1u.vercel.app/
 
 ## 🚀 Overview
 TaskFlow is a full-stack task management application built using **React, Node.js, Express, and MongoDB**. It allows users to create, manage, and track tasks efficiently.
