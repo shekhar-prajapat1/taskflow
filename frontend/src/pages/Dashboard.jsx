@@ -39,7 +39,7 @@ function Dashboard() {
     setError('');
 
     try {
-      const statsRes = await api.get('/tasks/analytics');
+      const statsRes = await api.get('/api/tasks/analytics');
       setStats(statsRes.data);
 
       const queryParams = new URLSearchParams({
@@ -53,7 +53,7 @@ function Dashboard() {
       if (statusFilter) queryParams.append('status', statusFilter);
       if (priorityFilter) queryParams.append('priority', priorityFilter);
 
-      const tasksRes = await api.get(`/tasks?${queryParams.toString()}`);
+      const tasksRes = await api.get(`/api/tasks?${queryParams.toString()}`);
       setTasks(tasksRes.data);
 
     } catch (err) {
@@ -89,9 +89,9 @@ function Dashboard() {
   const handleSaveTask = async (taskData) => {
     try {
       if (editingTask) {
-        await api.put(`/tasks/${editingTask._id}`, taskData);
+        await api.put(`/api/tasks/${editingTask._id}`, taskData);
       } else {
-        await api.post('/tasks', taskData);
+        await api.post('/api/tasks', taskData);
       }
       setIsModalOpen(false);
       fetchDashboardData();
@@ -102,13 +102,13 @@ function Dashboard() {
 
   const handleDeleteTask = async (taskId) => {
     if (window.confirm('Delete this task?')) {
-      await api.delete(`/tasks/${taskId}`);
+      await api.delete(`/api/tasks/${taskId}`);
       fetchDashboardData();
     }
   };
 
   const handleStatusChange = async (taskId, newStatus) => {
-    await api.put(`/tasks/${taskId}`, { status: newStatus });
+    await api.put(`/api/tasks/${taskId}`, { status: newStatus });
     fetchDashboardData();
   };
 
